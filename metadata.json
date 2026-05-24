@@ -1,0 +1,6 @@
+{
+  "name": "Rate My Startup Idea",
+  "description": "An elite Silicon Valley incubator evaluator and brutally honest startup analyst that scores your startup concepts, scans competitors, suggests monetization plans, and maps MVP execution roadmaps.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

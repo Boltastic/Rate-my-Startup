@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-yc-orange: #ff4f00;
+  --color-glass-bg: rgba(255, 255, 255, 0.7);
+  --color-glass-card: rgba(255, 255, 255, 0.4);
+}
+
+@layer utilities {
+  .glassmorphism {
+    background-color: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+  
+  .glassmorphism-dark {
+    background-color: rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .premium-glow {
+    box-shadow: 0 0 30px -5px rgba(255, 79, 0, 0.15);
+  }
+}
+
+body {
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* HIGH FIDELITY EXPORT TO PDF & PRINT MEDIA CONFIGURATION */
+@media print {
+  /* Block everything except our premium printable evaluation sheet */
+  #application-root > div:not(#printable-report-wrapper),
+  #workspace-container,
+  #portal-header,
+  #portal-sidebar,
+  #portal-history-sidebar,
+  #portal-footer,
+  aside,
+  header,
+  footer,
+  button,
+  form,
+  nav,
+  input,
+  select,
+  textarea,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Force container reset */
+  body, html, #application-root {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: "Inter", sans-serif !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #printable-report-wrapper {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .print-page {
+    page-break-after: always;
+    break-after: page;
+    padding: 2.5rem !important;
+    background: white !important;
+    min-height: 10.5in;
+    box-sizing: border-box;
+  }
+
+  .print-page:last-child {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+}
+
+
