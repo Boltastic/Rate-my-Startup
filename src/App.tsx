@@ -279,11 +279,31 @@ export default function App() {
       });
 
       if (!response.ok) {
-        const errJson = await response.json();
-        throw new Error(errJson.error || "Failed to contact analysis server");
+        let errMsg = "Failed to contact analysis server";
+        try {
+          const contentType = response.headers.get("Content-Type") || "";
+          if (contentType.includes("html") || response.status === 404) {
+            errMsg = `Host platform returned an HTML page (status ${response.status}). This usually means the API endpoints are not active or the request was redirected. Please check that 'vercel.json' is deployed correctly and GEMINI_API_KEY is set in your Vercel Environment Variables dashboard.`;
+          } else {
+            const errJson = await response.json();
+            errMsg = errJson.error || errMsg;
+          }
+        } catch (e) {
+          errMsg = `Server Error: HTTP status code ${response.status}.`;
+        }
+        throw new Error(errMsg);
       }
 
-      const data: StartupAnalysis = await response.json();
+      let data: StartupAnalysis;
+      try {
+        const textResponse = await response.text();
+        if (textResponse.trim().startsWith("<") || textResponse.trim().toLowerCase().startsWith("the page c")) {
+          throw new Error("Host platform returned HTML content instead of an API JSON object. Please consult setup guide or vercel configuration.");
+        }
+        data = JSON.parse(textResponse);
+      } catch (jsonErr: any) {
+        throw new Error(jsonErr.message || "Failed to parse analysis response JSON. Please ensure GEMINI_API_KEY is loaded in your Vercel/system configuration.");
+      }
       
       // Inject local settings to keep schema synchronized
       data.id = Math.random().toString(36).substring(7);
